@@ -33,8 +33,8 @@ class Node {
   int *key, size;
   Node **ptr;
   friend class BPTree;
-  string info[4]; 
-  
+  string info[4];
+
 
    public:
   Node();
@@ -131,7 +131,7 @@ void BPTree::search(int x) {
         //}
         //string texto = cursor->info[i];
         //cout << texto << endl;
-        
+
         return;
       }
     }
@@ -315,7 +315,7 @@ Node *BPTree::getRoot() {
 /////////////////////////////////////////////
 
 int main(){
-    ifstream arq1; arq1.open("Lista X-Men.csv");
+    ifstream arq1; arq1.open("movie.csv");
     string linha;
     string word;
     vector<string> vel; //vec das strings
@@ -328,29 +328,29 @@ int main(){
  /*   linha = "batata frita";
   node.insert(5);
     node.insert(15);
-  
+
   node.insert(25);
-  
+
   node.insert(35);
-  
+
   node.insert(45);
-  
+
   node.insert(55);
-  
+
   node.insert(40);
-  
+
   node.insert(30);
-  
+
   node.insert(27);
-  
+
   node.insert(18);
-  
+
   node.insert(67);
-  
+
   node.insert(28);
-  
+
   node.insert(32);
-  
+
   node.bota_string(5,linha);
 
 node.bota_string(15,linha);
@@ -365,7 +365,7 @@ node.bota_string(18,linha);
 node.bota_string(67,linha);
 node.bota_string(28,linha);
 node.bota_string(32,linha);
-  
+
   node.search(99);
   node.search(15);*/
 
@@ -374,10 +374,10 @@ node.bota_string(32,linha);
   //node.display(node.getRoot());
 
 
-    if ( arq1.is_open() ) {  
-        cout << "abriu" << endl; 
+    if ( arq1.is_open() ) {
+        cout << "abriu" << endl;
         while(arq1.good()){
-            arq1 >> linha;
+            getline(arq1, linha);
             cout << linha << endl;
             //cout << conti << endl;
             vel.push_back(linha);
@@ -394,13 +394,13 @@ node.bota_string(32,linha);
             //cout << linha;
             /*stringstream str(linha);
             info inf;
-            
+
                 getline(str, word, ';');
                 inf.ISSUE = word;*/
-                
-            
 
-        //}       
+
+
+        //}
     }
     node.search(10);
     if(tem==true){
