@@ -33,6 +33,7 @@ class Node {
   int *key, size;
   Node **ptr;
   friend class BPTree;
+  //const char* info[4][250];
   string info[4];
 
 
@@ -89,10 +90,10 @@ void BPTree::bota_string(int x, string str) {
     }
     for (int i = 0; i < cursor->size; i++) {
       if (cursor->key[i] == x) {
-        cout << "Found, string put\n";
-        //cout << str << endl;
-        //cursor->info[i]=str;
-        cout << cursor->info[i] << endl;
+        //cout << "Found, string put\n";
+        cout << str << endl << "----pse-----" << endl;
+        cursor->info[i]=str;
+        cout << cursor->info[i] << endl << "+++++++++++" << endl;
         return;
       }
     }
@@ -131,6 +132,10 @@ void BPTree::search(int x) {
         //}
         //string texto = cursor->info[i];
         //cout << texto << endl;
+        cout << "papa" << endl;
+
+        cout << cursor->info[i] << endl;
+        cout << "pipi" << endl;
 
         return;
       }
@@ -402,10 +407,18 @@ node.bota_string(32,linha);
 
         //}
     }
-    node.search(10);
-    if(tem==true){
-        cout << vel[10] << endl;
+    for(int k=0; k<vel.size(); k++){
+        node.bota_string(k, vel[k]); //n ta funcionando corretamente
     }
+    node.search(2);
+    /*if(tem==true){
+        cout << vel[2] << endl;
+    }*/
+    tem=false;
+    node.search(15);
+    /*if(tem==true){
+        cout << vel[15] << endl;
+    }*/
 
 
     //ofstream earq("lista-ordenada.csv", ios::out | ios::binary);
