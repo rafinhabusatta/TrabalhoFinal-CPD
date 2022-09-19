@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>    // std::sort
 
 #include <cstring>
 #define LIM 300
@@ -22,6 +23,7 @@ struct Movie // Movie is a struct type
   // int year;           // Year of release
   // char director[LIM]; // Director of the movie
   char genre[LIM]; // Genre of the movie
+  int map_inv;
 };
 
 
@@ -167,6 +169,7 @@ void BPTree::search(int x)
              << endl;
         tem = true;
         cout << "Id:" << cursor->filmes[i].id << endl << "Titulo:" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
+        //cout <<  "Mapeamento Inverso:" << cursor->filmes[i].map_inv << endl;
         return;
       }
     }
@@ -423,6 +426,16 @@ Node *BPTree::getRoot()
 
   return root;
 }
+
+int Mapeamento_Hash(std::string s, int M)
+{
+    int hash = 0;
+    for (int i = 0; i < s.length(); i++)
+        hash = (128 * hash + s[i]) % M;
+    return hash;
+}
+
+
 /////////////////////////////////////////////
 
 
@@ -443,9 +456,13 @@ int main()
   BPTree node;
 
   string aux;
-
+  int teste[] = {2,3,4,97,2,1,5,8,4,10};
+  cout << teste[0] <<" "<<teste[1] <<" "<<teste[2] <<" "<<teste[3] <<" "<<teste[4] <<" "<<teste[5] <<" "<<teste[6] <<" "<<teste[7] <<" "<<teste[8] <<" "<<teste[9] <<" " << endl;
+  int n = sizeof(teste) / sizeof(teste[0]);
+  sort(teste, teste+n);
+  cout << teste[0] <<" "<<teste[1] <<" "<<teste[2] <<" "<<teste[3] <<" "<<teste[4] <<" "<<teste[5] <<" "<<teste[6] <<" "<<teste[7] <<" "<<teste[8] <<" "<<teste[9] <<" " << endl;
   
-  int papa = 0;
+  
   if (arq1.is_open() && arq2.is_open())
   {
     cout << "abriu" << endl;
@@ -456,52 +473,24 @@ int main()
         getline(arq1, linha);
         aux = strtok((char *)linha.c_str(), ",");
         // cout << aux << endl;
-        //  getline(linha, aux, delimeter); //////weeo ta aqui
         movies[conti].id = atoi(aux.c_str());
         //cout <<  movies[conti].id << endl;
-        ////getline(linha, aux, delimeter);
         aux = strtok(NULL, "\n");
+        ////// chave do mapeamento inverso
+        movies[conti].map_inv = Mapeamento_Hash(aux, MAX_ARRAY);
+        ////////
         strncpy(movies[conti].title, aux.c_str(), LIM);
         //cout << aux << endl;
         getline(arq2, linha);
         aux = strtok((char *)linha.c_str(), "\n");
         strncpy(movies[conti].genre, aux.c_str(), LIM);
-        //cout << aux << endl;
-        // movies->title[conti] = aux;
-        //  getline(linha, aux, '\0');
-        //  movies->genre[conti] = aux;
-        //  //cout << linha << endl;
-        cout << conti << endl;
 
-        // vel.push_back(linha);
-        /////informacao[i] = linha;
-
-        // //cout << vel.back() << endl;
         node.insert(conti);
-        //cout << conti << endl;
-        // node.bota_string(conti, linha); //n ta funcionando corretamente
+
         conti++;
       }
       cout << "teste" << endl;
-      /*getline(arq1, linha);
-        aux = strtok((char *)linha.c_str(), ",");
-        //cout << aux << endl;
-        //  getline(linha, aux, delimeter); //////weeo ta aqui
-        
-        movies[conti].id = atoi(aux.c_str());
-        //cout <<  movies[conti].id << endl;
-        ////getline(linha, aux, delimeter);
-        aux = strtok(NULL, "\n");
-        strncpy(movies[conti].title, aux.c_str(), LIM);
-        //cout << aux << endl;
-        getline(arq2, linha);
-        aux = strtok((char *)linha.c_str(), "\n");
-        strncpy(movies[conti].genre, aux.c_str(), LIM);
-    
-      node.insert(conti);
-      cout << conti << endl;
-      // node.bota_string(conti, linha); //n ta funcionando corretamente
-      conti++;*/
+
       break;
     }
     arq1.close();
@@ -511,8 +500,8 @@ int main()
   for (int k = 0; k < conti; k++)
   {
     
-    //cout << papa;
-    node.bota_string(k, movies[k]); // n ta funcionando corretamente
+
+    node.bota_string(k, movies[k]); 
   }
   int escolha = 0;
   //node.display(node.getRoot());
@@ -522,15 +511,7 @@ int main()
     cin >> escolha;
     node.search(escolha);
   }
-  // node.search(2);
-  /*if(tem==true){
-      cout << vel[2] << endl;
-  }*/
-  // tem=false;
-  // node.search(15);
-  /*if(tem==true){
-      cout << vel[15] << endl;
-  }*/
+
   /////////////////////////////////gerar arquivo//////////////////
   /*ifstream arqx;
   arqx.open("movie.csv");
