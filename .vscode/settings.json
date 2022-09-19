@@ -68,6 +68,23 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
+<<<<<<< Updated upstream
         "xiosbase": "cpp"
+=======
+        "xiosbase": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "ios": "cpp",
+        "xfacet": "cpp",
+        "xlocale": "cpp",
+        "xlocinfo": "cpp",
+        "xlocnum": "cpp",
+        "xmemory": "cpp",
+        "xstddef": "cpp",
+        "xstring": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp"
+>>>>>>> Stashed changes
     }
 }
