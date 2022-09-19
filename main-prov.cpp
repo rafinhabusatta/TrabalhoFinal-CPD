@@ -6,7 +6,7 @@
 #include <vector>
 
 #include <cstring>
-#define LIM 100
+#define LIM 300
 #define MAX_ARRAY 1000
 
 //#include <C:\Users\tomas\OneDrive\Área de Trabalho\Cadeiras semestre 3\cpd\trabfinal\btree.cpp>
@@ -166,19 +166,7 @@ void BPTree::search(int x)
         cout << "Found\n"
              << endl;
         tem = true;
-        // printf("%d %d\n", cursor->key[i], i);
-        // printf("%s\n", cursor->info[i]);
-        // for(int h=0; h<MAX; h++){
-        //     printf("%s\n", cursor->info[h]);
-        // }
-        // string texto = cursor->info[i];
-        // cout << texto << endl;
-        cout << "papa" << endl;
-
-        cout << "Id:" << cursor->filmes[i].id << endl << "Titulo" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
-
-        cout << "pipi" << endl;
-
+        cout << "Id:" << cursor->filmes[i].id << endl << "Titulo:" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
         return;
       }
     }
@@ -191,7 +179,6 @@ void BPTree::search(int x)
 // Insert Operation - cria a b+ tree com ids dos filmes (index)
 void BPTree::insert(int x)
 {
-  // cout << "chego aqui" << endl;
   if (root == NULL)
   {
 
@@ -415,6 +402,7 @@ void BPTree::display(Node *cursor)
     for (int i = 0; i < cursor->size; i++)
     {
       cout << cursor->key[i] << " ";
+      cout << "Id:" << cursor->filmes[i].id << endl << "Titulo:" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
     }
     cout << "\n";
     if (cursor->IS_LEAF != true)
@@ -441,11 +429,13 @@ Node *BPTree::getRoot()
 int main()
 {
   ifstream arq1;
-  arq1.open("movie.csv");
+  arq1.open("info1.txt");
+  ifstream arq2;
+  arq2.open("info2.txt");
   string linha;
   string word;
   vector<string> vel; // vec das strings
-  string informacao[MAX_ARRAY];
+  //string informacao[MAX_ARRAY];
   // vector<Movie> movies;
   Movie movies[MAX_ARRAY]; // vetor de filmes
   int conti = 0;
@@ -453,82 +443,35 @@ int main()
   BPTree node;
 
   string aux;
-  //char delimeter(',');
 
-  //*aux_node = node;
-  /*   linha = "batata frita";
-   node.insert(5);
-     node.insert(15);
-
-   node.insert(25);
-
-   node.insert(35);
-
-   node.insert(45);
-
-   node.insert(55);
-
-   node.insert(40);
-
-   node.insert(30);
-
-   node.insert(27);
-
-   node.insert(18);
-
-   node.insert(67);
-
-   node.insert(28);
-
-   node.insert(32);
-
-   node.bota_string(5,linha);
-
- node.bota_string(15,linha);
- node.bota_string(25,linha);
- node.bota_string(35,linha);
- node.bota_string(45,linha);
- node.bota_string(55,linha);
- node.bota_string(40,linha);
- node.bota_string(30,linha);
- node.bota_string(27,linha);
- node.bota_string(18,linha);
- node.bota_string(67,linha);
- node.bota_string(28,linha);
- node.bota_string(32,linha);
-
-   node.search(99);
-   node.search(15);*/
-
-  // aux_node->info[chave] = "teste";
-  // cout << achou << " " << chave << " " << aux_node->info[chave] << endl;
-  // node.display(node.getRoot());
-
-  if (arq1.is_open())
+  
+  int papa = 0;
+  if (arq1.is_open() && arq2.is_open())
   {
     cout << "abriu" << endl;
-    while (arq1.good())
+    while (arq1.good() && arq2.good())
     {
       for (int i = 0; i < MAX_ARRAY; i++)
       {
         getline(arq1, linha);
         aux = strtok((char *)linha.c_str(), ",");
-        //cout << aux << endl;
+        // cout << aux << endl;
         //  getline(linha, aux, delimeter); //////weeo ta aqui
         movies[conti].id = atoi(aux.c_str());
-        cout <<  movies[conti].id << endl;
+        //cout <<  movies[conti].id << endl;
         ////getline(linha, aux, delimeter);
-        aux = strtok(NULL, ",");
+        aux = strtok(NULL, "\n");
         strncpy(movies[conti].title, aux.c_str(), LIM);
         //cout << aux << endl;
-        aux = strtok(NULL, "\n");
+        getline(arq2, linha);
+        aux = strtok((char *)linha.c_str(), "\n");
         strncpy(movies[conti].genre, aux.c_str(), LIM);
         //cout << aux << endl;
         // movies->title[conti] = aux;
         //  getline(linha, aux, '\0');
         //  movies->genre[conti] = aux;
         //  //cout << linha << endl;
-        //   //cout << conti << endl;
+        cout << conti << endl;
 
         // vel.push_back(linha);
         /////informacao[i] = linha;
@@ -539,41 +482,40 @@ int main()
         // node.bota_string(conti, linha); //n ta funcionando corretamente
         conti++;
       }
-      getline(arq1, linha);
-      aux = strtok((char *)linha.c_str(), ",");
-      //cout << aux << endl;
-      //  getline(linha, aux, delimeter); //////weeo ta aqui
-      movies[conti].id = atoi(aux.c_str());
-      ////getline(linha, aux, delimeter);
-      aux = strtok(NULL, ",");
-      //cout << aux << endl;
-      aux = strtok(NULL, "\n");
-      //cout << aux << endl;
+      cout << "teste" << endl;
+      /*getline(arq1, linha);
+        aux = strtok((char *)linha.c_str(), ",");
+        //cout << aux << endl;
+        //  getline(linha, aux, delimeter); //////weeo ta aqui
+        
+        movies[conti].id = atoi(aux.c_str());
+        //cout <<  movies[conti].id << endl;
+        ////getline(linha, aux, delimeter);
+        aux = strtok(NULL, "\n");
+        strncpy(movies[conti].title, aux.c_str(), LIM);
+        //cout << aux << endl;
+        getline(arq2, linha);
+        aux = strtok((char *)linha.c_str(), "\n");
+        strncpy(movies[conti].genre, aux.c_str(), LIM);
+    
       node.insert(conti);
-      //cout << conti << endl;
+      cout << conti << endl;
       // node.bota_string(conti, linha); //n ta funcionando corretamente
-      conti++;
+      conti++;*/
       break;
     }
     arq1.close();
-    /*arq1.open("listamini.csv");
-    while ( arq1.good() ) {
-        arq1 >> linha;
-1
-        //cout << linha;
-        /*stringstream str(linha);
-        info inf;
+    arq2.close();
 
-            getline(str, word, ';');
-            inf.ISSUE = word;*/
-
-    //}
   }
   for (int k = 0; k < conti; k++)
   {
+    
+    //cout << papa;
     node.bota_string(k, movies[k]); // n ta funcionando corretamente
   }
   int escolha = 0;
+  //node.display(node.getRoot());
   while (escolha != -1)
   {
     cout << "Escolha um index:";
@@ -589,7 +531,34 @@ int main()
   /*if(tem==true){
       cout << vel[15] << endl;
   }*/
+  /////////////////////////////////gerar arquivo//////////////////
+  /*ifstream arqx;
+  arqx.open("movie.csv");
 
+  if (arqx.is_open())
+  {
+    ofstream outputFile;                  // Step 2. Declare an output file stream variable.
+    outputFile.open("info1.txt");
+    ofstream outputFile2;
+    outputFile2.open("info2.txt");
+    cout << "abriu" << endl;
+    while (arqx.good())
+    {
+      getline(arqx, linha);
+        aux = strtok((char *)linha.c_str(), ",\"");
+        outputFile << aux << ",";
+        aux = strtok(NULL, "\"");
+        outputFile << aux << endl;
+         aux = strtok(NULL, "\n");
+        outputFile2 << aux << endl;
+       
+        
+    }
+    outputFile.close(); 
+    outputFile2.close(); 
+  }
+  */
+ /////////////////////////////////gerar arquivo//////////////////
   // ofstream earq("lista-ordenada.csv", ios::out | ios::binary);
   // if(!earq) {
   //   cout << "Cannot open file!" << endl;
