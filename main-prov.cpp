@@ -382,6 +382,7 @@ node.bota_string(32,linha);
     if ( arq1.is_open() ) {
         cout << "abriu" << endl;
         while(arq1.good()){
+                for(int i=0; i< 1000; i++){
             getline(arq1, linha);
             cout << linha << endl;
             //cout << conti << endl;
@@ -389,7 +390,8 @@ node.bota_string(32,linha);
             //cout << vel.back() << endl;
             node.insert(conti);
             //node.bota_string(conti, linha); //n ta funcionando corretamente
-            conti++;
+            conti++;}
+            break;
         }
         arq1.close();
         /*arq1.open("listamini.csv");
@@ -410,12 +412,18 @@ node.bota_string(32,linha);
     for(int k=0; k<vel.size(); k++){
         node.bota_string(k, vel[k]); //n ta funcionando corretamente
     }
-    node.search(2);
+    int escolha =0;
+    while(escolha!=-1){
+        cout << "Escolha um index:";
+        cin >> escolha;
+        node.search(escolha);
+    }
+    //node.search(2);
     /*if(tem==true){
         cout << vel[2] << endl;
     }*/
-    tem=false;
-    node.search(15);
+    //tem=false;
+    //node.search(15);
     /*if(tem==true){
         cout << vel[15] << endl;
     }*/
