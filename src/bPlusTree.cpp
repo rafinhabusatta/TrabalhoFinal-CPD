@@ -2,90 +2,28 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <string>
-#include <vector>
-#include <algorithm>    // std::sort
-
-#include <cstring>
 #define LIM 300
-#define MAX_ARRAY 1000
-
-//#include <C:\Users\tomas\OneDrive\Área de Trabalho\Cadeiras semestre 3\cpd\trabfinal\btree.cpp>
 using namespace std;
-int MAX = 4;
-bool tem = false;
-
-
-struct Movie // Movie is a struct type
-{
-  int id;
-  char title[LIM]; // Title of the movie
-  // int year;           // Year of release
-  // char director[LIM]; // Director of the movie
-  char genre[LIM]; // Genre of the movie
-  int map_inv;
-};
-
-
-// CPP program to implement B* tree
-// Searching on a B+ tree in C++
-///////////////////////////////
-
-// BP node
-
-class Node
-{
-  bool IS_LEAF;
-  int *key, size; // size is the number of keys in the node
-  Node **ptr;
-  friend class BPTree;
-  // const char* info[4][250];
-  //string info[4];
-  Movie filmes[4];
-
-public:
-  Node();
-};
+#define MAX 4
+#include "../include/bPlusTree.h"
 
 Node *aux_node = NULL;
 int chave = 0;
 bool achou = false;
-
-// BP tree
-class BPTree
-{
-
-  Node *root;
-  void insertInternal(int, Node *, Node *);
-  Node *findParent(Node *, Node *);
-
-
-public:
-  BPTree();
-  void search(int);
-  void insert(int);
-  void bota_string(int, Movie);
-
-  void display(Node *);
-  Node *getRoot();
-};
-
+bool tem = false;
 
 Node::Node()
 {
-
   key = new int[MAX];
   ptr = new Node *[MAX + 1];
 }
 
-
 BPTree::BPTree()
 {
-
   root = NULL;
 }
 
-// Search operation
+// Bota String
 
 void BPTree::bota_string(int x, Movie mov)
 {
@@ -119,9 +57,9 @@ void BPTree::bota_string(int x, Movie mov)
       if (cursor->key[i] == x)
       {
         // cout << "Found, string put\n";
-        //cout << str << endl << "----pse-----" << endl;
-        //cursor->info[i] = str;
-        //cout << cursor->info[i] << endl << "+++++++++++" << endl;
+        // cout << str << endl << "----pse-----" << endl;
+        // cursor->info[i] = str;
+        // cout << cursor->info[i] << endl << "+++++++++++" << endl;
         cursor->filmes[i] = mov;
 
         return;
@@ -131,7 +69,6 @@ void BPTree::bota_string(int x, Movie mov)
     achou = false;
   }
 }
-
 
 // Search operation
 void BPTree::search(int x)
@@ -168,8 +105,10 @@ void BPTree::search(int x)
         cout << "Found\n"
              << endl;
         tem = true;
-        cout << "Id:" << cursor->filmes[i].id << endl << "Titulo:" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
-        //cout <<  "Mapeamento Inverso:" << cursor->filmes[i].map_inv << endl;
+        cout << "Id:" << cursor->filmes[i].id << endl
+             << "Titulo:" << cursor->filmes[i].title << endl
+             << "Genero:" << cursor->filmes[i].genre << endl;
+        // cout <<  "Mapeamento Inverso:" << cursor->filmes[i].map_inv << endl;
         return;
       }
     }
@@ -177,7 +116,6 @@ void BPTree::search(int x)
     tem = false;
   }
 }
-
 
 // Insert Operation - cria a b+ tree com ids dos filmes (index)
 void BPTree::insert(int x)
@@ -189,7 +127,6 @@ void BPTree::insert(int x)
     root->key[0] = x;
     root->IS_LEAF = true;
     root->size = 1;
-
   }
   else
   {
@@ -228,7 +165,6 @@ void BPTree::insert(int x)
       cursor->size++;
       cursor->ptr[cursor->size] = cursor->ptr[cursor->size - 1];
       cursor->ptr[cursor->size - 1] = NULL;
-
     }
     else
     {
@@ -274,7 +210,6 @@ void BPTree::insert(int x)
         newRoot->IS_LEAF = false;
         newRoot->size = 1;
         root = newRoot;
-
       }
       else
       {
@@ -306,7 +241,6 @@ void BPTree::insertInternal(int x, Node *cursor, Node *child)
     cursor->key[i] = x;
     cursor->size++;
     cursor->ptr[i + 1] = child;
-
   }
   else
   {
@@ -359,7 +293,6 @@ void BPTree::insertInternal(int x, Node *cursor, Node *child)
       newRoot->IS_LEAF = false;
       newRoot->size = 1;
       root = newRoot;
-
     }
     else
     {
@@ -405,7 +338,9 @@ void BPTree::display(Node *cursor)
     for (int i = 0; i < cursor->size; i++)
     {
       cout << cursor->key[i] << " ";
-      cout << "Id:" << cursor->filmes[i].id << endl << "Titulo:" << cursor->filmes[i].title << endl << "Genero:" << cursor->filmes[i].genre << endl;
+      cout << "Id:" << cursor->filmes[i].id << endl
+           << "Titulo:" << cursor->filmes[i].title << endl
+           << "Genero:" << cursor->filmes[i].genre << endl;
     }
     cout << "\n";
     if (cursor->IS_LEAF != true)
@@ -425,125 +360,4 @@ Node *BPTree::getRoot()
 {
 
   return root;
-}
-
-int Mapeamento_Hash(std::string s, int M)
-{
-    int hash = 0;
-    for (int i = 0; i < s.length(); i++)
-        hash = (128 * hash + s[i]) % M;
-    return hash;
-}
-
-
-/////////////////////////////////////////////
-
-
-int main()
-{
-  ifstream arq1;
-  arq1.open("info1.txt");
-  ifstream arq2;
-  arq2.open("info2.txt");
-  string linha;
-  string word;
-  vector<string> vel; // vec das strings
-  //string informacao[MAX_ARRAY];
-  // vector<Movie> movies;
-  Movie movies[MAX_ARRAY]; // vetor de filmes
-  int conti = 0;
-
-  BPTree node;
-
-  string aux;
-  int teste[] = {2,3,4,97,2,1,5,8,4,10};
-  cout << teste[0] <<" "<<teste[1] <<" "<<teste[2] <<" "<<teste[3] <<" "<<teste[4] <<" "<<teste[5] <<" "<<teste[6] <<" "<<teste[7] <<" "<<teste[8] <<" "<<teste[9] <<" " << endl;
-  int n = sizeof(teste) / sizeof(teste[0]);
-  sort(teste, teste+n);
-  cout << teste[0] <<" "<<teste[1] <<" "<<teste[2] <<" "<<teste[3] <<" "<<teste[4] <<" "<<teste[5] <<" "<<teste[6] <<" "<<teste[7] <<" "<<teste[8] <<" "<<teste[9] <<" " << endl;
-  
-  
-  if (arq1.is_open() && arq2.is_open())
-  {
-    cout << "abriu" << endl;
-    while (arq1.good() && arq2.good())
-    {
-      for (int i = 0; i < MAX_ARRAY; i++)
-      {
-        getline(arq1, linha);
-        aux = strtok((char *)linha.c_str(), ",");
-        // cout << aux << endl;
-        movies[conti].id = atoi(aux.c_str());
-        //cout <<  movies[conti].id << endl;
-        aux = strtok(NULL, "\n");
-        ////// chave do mapeamento inverso
-        movies[conti].map_inv = Mapeamento_Hash(aux, MAX_ARRAY);
-        ////////
-        strncpy(movies[conti].title, aux.c_str(), LIM);
-        //cout << aux << endl;
-        getline(arq2, linha);
-        aux = strtok((char *)linha.c_str(), "\n");
-        strncpy(movies[conti].genre, aux.c_str(), LIM);
-
-        node.insert(conti);
-
-        conti++;
-      }
-      cout << "teste" << endl;
-
-      break;
-    }
-    arq1.close();
-    arq2.close();
-
-  }
-  for (int k = 0; k < conti; k++)
-  {
-    
-
-    node.bota_string(k, movies[k]); 
-  }
-  int escolha = 0;
-  //node.display(node.getRoot());
-  while (escolha != -1)
-  {
-    cout << "Escolha um index:";
-    cin >> escolha;
-    node.search(escolha);
-  }
-
-  /////////////////////////////////gerar arquivo//////////////////
-  /*ifstream arqx;
-  arqx.open("movie.csv");
-
-  if (arqx.is_open())
-  {
-    ofstream outputFile;                  // Step 2. Declare an output file stream variable.
-    outputFile.open("info1.txt");
-    ofstream outputFile2;
-    outputFile2.open("info2.txt");
-    cout << "abriu" << endl;
-    while (arqx.good())
-    {
-      getline(arqx, linha);
-        aux = strtok((char *)linha.c_str(), ",\"");
-        outputFile << aux << ",";
-        aux = strtok(NULL, "\"");
-        outputFile << aux << endl;
-         aux = strtok(NULL, "\n");
-        outputFile2 << aux << endl;
-       
-        
-    }
-    outputFile.close(); 
-    outputFile2.close(); 
-  }
-  */
- /////////////////////////////////gerar arquivo//////////////////
-  // ofstream earq("lista-ordenada.csv", ios::out | ios::binary);
-  // if(!earq) {
-  //   cout << "Cannot open file!" << endl;
-  //   return 1;
-  //}
-
 }
