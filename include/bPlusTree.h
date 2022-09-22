@@ -9,6 +9,7 @@ struct Movie
   // char director[LIM]; // Director of the movie
   char genre[LIM]; // Genre of the movie
   int map_inv;
+  int imdb;
 };
 
 // BPTree node;

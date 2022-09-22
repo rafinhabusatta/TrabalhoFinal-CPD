@@ -1,4 +1,3 @@
-"genres"
 "Adventure|Animation|Children|Comedy|Fantasy"
 "Adventure|Children|Fantasy"
 "Comedy|Romance"
