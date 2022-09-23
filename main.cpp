@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <algorithm> // std::sort
 #include <cstring>
 #include <iomanip>
 #include "include/bPlusTree.h"
@@ -181,13 +180,6 @@ int main()
                 node.search(indexChoice - 1);
             }
         }
-        // else if (escolha == 4)
-        // {
-        //     cout << "Digite um nome:";
-        //     cin >> nome;
-        //     num_aux = Mapeamento_Hash(nome, MAX_ARRAY);
-        //     nodeinv.search(num_aux);
-        // }
         else if (escolha == 4)
         {
             InvertedIndexFunction("data/movies.csv");
